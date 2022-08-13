@@ -1,6 +1,8 @@
 # react-hooks 的正确认知
 
-[react-hooks 的正确认知] ⚡️](https://stackblitz.com/edit/react-ts-ucgye6)
+博客地址： https://www.maoyali.cn/pages/477a52/
+
+![react-hooks 的正确认知] ⚡️](https://stackblitz.com/edit/react-ts-resje9?file=README.md)
 
 ## 实例带入
 
@@ -15,7 +17,7 @@
 
 ## 对号入座
 
-> 下面我们列举出常用的几个hooks进行对号入座
+> 下面我们列举出常用的几个 hooks 进行对号入座
 
 - useState
 - useEffect
@@ -27,13 +29,11 @@
 
 上述几个`hooks`除了`useRef`,其余几个都可以归类与自变量和因变量
 
-
-自变量 | 因变量
----|---
-useState | useEffect
-useReducer | useMemo
-useContext | useCallBack
-
+| 自变量     | 因变量      |
+| ---------- | ----------- |
+| useState   | useEffect   |
+| useReducer | useMemo     |
+| useContext | useCallBack |
 
 ## useState
 
@@ -53,8 +53,8 @@ export default function App() {
 }
 
 ```
-![reack-hooks自变量](https://cdn.jsdelivr.net/gh/maoyln/maoyl-img/blog/react-hooks%E8%87%AA%E5%8F%98%E9%87%8F%E5%9B%A0%E5%8F%98%E9%87%8F.gif)
 
+![reack-hooks自变量](https://cdn.jsdelivr.net/gh/maoyln/maoyl-img/blog/react-hooks%E8%87%AA%E5%8F%98%E9%87%8F%E5%9B%A0%E5%8F%98%E9%87%8F.gif)
 
 ```js
 export default function App() {
@@ -74,15 +74,14 @@ export default function App() {
 }
 
 ```
-![reack-hooks自变量和因变量](https://cdn.jsdelivr.net/gh/maoyln/maoyl-img/blog/Aug-14-2022%2000-26-27.gif)
 
+![reack-hooks自变量和因变量](https://cdn.jsdelivr.net/gh/maoyln/maoyl-img/blog/Aug-14-2022%2000-26-27.gif)
 
 > 自变量修改引起试图渲染
 > 自变量变化引起因变量修改，因变量修改引起试图渲染
-![reack-hooks自变量和因变量关系](https://cdn.jsdelivr.net/gh/maoyln/maoyl-img/blog/20220812144418.png)
+> ![reack-hooks自变量和因变量关系](https://cdn.jsdelivr.net/gh/maoyln/maoyl-img/blog/20220812144418.png)
 
-
-## useMemo和useCallBack
+## useMemo 和 useCallBack
 
 > useMemo 在此处用来缓存一个因变量
 > useCallBack 在此处用来缓存一个函数类型的因变量
@@ -107,15 +106,12 @@ export default function App() {
 
 ![useMemo和useCallBack](https://cdn.jsdelivr.net/gh/maoyln/maoyl-img/blog/Aug-14-2022%2000-29-34.gif)
 
-使用hooks显示的指明因变量有什么好处呢？
+使用 hooks 显示的指明因变量有什么好处呢？
 
 - 当使用的时候`result`和`handleChange`会被缓存起来，只要`count`不变，它们始终读取的是缓存中的数据;
 - 不使用`useMemo`和`useCallBack`是每次`count`改变的时候会创建新的`result`和新的`handleChange`;
 
-> 这涉及到react的性能优化，当然也不是使用`useMemo`和`useCallBack`越多越好，后续我们会继续学习什么时候使用`useMemo`和`useCallBack`比较好
-
-
-
+> 这涉及到 react 的性能优化，当然也不是使用`useMemo`和`useCallBack`越多越好，后续我们会继续学习什么时候使用`useMemo`和`useCallBack`比较好
 
 ## 副作用函数
 
@@ -129,51 +125,51 @@ export default function App() {
 包含副作用函数：如果传入一固定的参数，不因有固定的输出，则说改函数是包含副作用的
 ```
 
-在函数组件中可以通过useEffect来定义有副作用的因变量
-假设我们`count`变化之后，让浏览器的title也改变; 改变标题就是副作用；
+在函数组件中可以通过 useEffect 来定义有副作用的因变量
+假设我们`count`变化之后，让浏览器的 title 也改变; 改变标题就是副作用；
 
 ![useMemo和useCallBack](https://cdn.jsdelivr.net/gh/maoyln/maoyl-img/blog/Aug-14-2022%2000-39-18.gif)
-    
- 
- ## useContext
- 
- 接下来我们继续修改我们的例子
- ```js
+
+## useContext
+
+接下来我们继续修改我们的例子
+
+```js
 export default function App() {
-  const [count, setCount] = useState(0);
-  const result = useMemo(() => count * 2 + 1, [count]);
-  useEffect(() => {
-    document.title = count + '新标题';
-  }, [count]);
+ const [count, setCount] = useState(0);
+ const result = useMemo(() => count * 2 + 1, [count]);
+ useEffect(() => {
+   document.title = count + '新标题';
+ }, [count]);
 
-  const handleChange = useCallback(() => setCount(count + 1), [count]);
+ const handleChange = useCallback(() => setCount(count + 1), [count]);
 
-  const RenderCount = ({ data }) => {
-    return <i>{data}</i>;
-  };
+ const RenderCount = ({ data }) => {
+   return <i>{data}</i>;
+ };
 
-  return (
-    <div>
-      <ul onClick={handleChange}>
-        <li>
-          count是: <RenderCount data={count} />
-        </li>
-        <li>
-          result是: <RenderCount data={result} />
-        </li>
-      </ul>
-    </div>
-  );
+ return (
+   <div>
+     <ul onClick={handleChange}>
+       <li>
+         count是: <RenderCount data={count} />
+       </li>
+       <li>
+         result是: <RenderCount data={result} />
+       </li>
+     </ul>
+   </div>
+ );
 }
 
- ```
+```
+
 ![useContext](https://cdn.jsdelivr.net/gh/maoyln/maoyl-img/blog/WeChatfc4b1c72b3d9f558640b05dfcd1b7278.png)
 
 如上图可以看出，一个字变量和因变量又能作为另一个组件（子组件）的自变量和因变量，使用我们上述方式如图中叶子节点视图组件拿到根节点的视图组件的参数需要逐一传递，很复杂；
 此时就又了`useContext`,在第一级组件通过`createContext`创建`Context`后，其子组件及其子组件的字组件等都能通过`useContext`可以直接使用第一级组件通过`creatContext`创建的`Context`。
 
 > 总结：通过这种方式使得跨层级的传递自变量变得很简单
-
 
 ## useRef
 
@@ -212,12 +208,12 @@ export default function App() {
 ![useRef](https://cdn.jsdelivr.net/gh/maoyln/maoyl-img/blog/Aug-14-2022%2001-47-54.gif)
 
 :::tip 总结
-    useState:定义自变量
-    useMemo：定义无辅助作用的因变量
-    useCallBack：定义无辅助作用的因变量
-    useEffect：定义有辅助作用的因变量
-    useReducer：可以看作是进阶版的useState，他使用redux的理念，
-                将多个state合并成一个，本质上也是因变量
-    useContext：为了跨组件层级操作自变量
-    useRef：为了让组件逻辑更灵活
+useState:定义自变量
+useMemo：定义无辅助作用的因变量
+useCallBack：定义无辅助作用的因变量
+useEffect：定义有辅助作用的因变量
+useReducer：可以看作是进阶版的 useState，他使用 redux 的理念，
+将多个 state 合并成一个，本质上也是因变量
+useContext：为了跨组件层级操作自变量
+useRef：为了让组件逻辑更灵活
 :::
